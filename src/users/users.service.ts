@@ -20,7 +20,7 @@ export class UsersService {
   }
 
   findOneByUsername(username: string) {
-    return this.prisma.user.findFirst({ where: { name: username } });
+    return this.prisma.user.findFirst({ where: { username } });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
