@@ -7,8 +7,12 @@ import {
   Param,
   Delete,
   UsePipes,
+  UseInterceptors,
+  UploadedFile,
+  ValidationPipe,
 } from '@nestjs/common';
-import { ValidateIDPipe } from 'src/validators/validateID.pipe';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { parse } from 'path';
 import { AudiosService } from './audios.service';
 import { CreateAudioDto } from './dto/create-audio.dto';
 import { UpdateAudioDto } from './dto/update-audio.dto';
@@ -18,8 +22,11 @@ export class AudiosController {
   constructor(private readonly audiosService: AudiosService) {}
 
   @Post()
-  @UsePipes(ValidateIDPipe)
-  create(@Body() createAudioDto: CreateAudioDto) {
+  @UseInterceptors(FileInterceptor('file'))
+  create(
+    @Body() createAudioDto: CreateAudioDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
     return this.audiosService.create(createAudioDto);
   }
 
@@ -29,8 +36,8 @@ export class AudiosController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.audiosService.findOne(+id);
+  findOne(@Param('id') id: number) {
+    return this.audiosService.findOne(id);
   }
 
   @Patch(':id')

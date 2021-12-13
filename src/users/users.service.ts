@@ -23,7 +23,7 @@ export class UsersService {
     return this.prisma.user.findFirst({ where: { username } });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  update(id: number, updateUserDto: UpdateUserDto): Promise<any> {
     return this.prisma.user.update({ where: { id }, data: updateUserDto });
   }
 

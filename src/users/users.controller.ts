@@ -6,11 +6,11 @@ import {
   Patch,
   Param,
   Delete,
+  HttpException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ValidateIDPipe } from 'src/validators/validateID.pipe';
 
 @Controller('users')
 export class UsersController {
@@ -27,8 +27,12 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const result = await this.usersService.findOne(+id);
+    if (result) {
+      return result;
+    }
+    throw new HttpException('User not found', 404);
   }
 
   @Get('username/:username')

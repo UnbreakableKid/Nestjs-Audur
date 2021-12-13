@@ -1,4 +1,6 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+
 export class CreateAudioDto {
   @IsString()
   @IsNotEmpty()
@@ -6,5 +8,6 @@ export class CreateAudioDto {
 
   @IsNotEmpty()
   @IsNumber()
-  readonly authorId: number;
+  @Type(() => Number)
+  authorId: number;
 }

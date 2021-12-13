@@ -16,7 +16,7 @@ interface User {
 export class ValidateIDPipe implements PipeTransform<User> {
   constructor(private usersService: UsersService) {}
 
-  async transform(value: User, metadata: ArgumentMetadata) {
+  async transform(value: any, metadata: ArgumentMetadata) {
     const { authorId } = value;
 
     const user = await this.usersService.findOne(authorId);
