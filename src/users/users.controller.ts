@@ -6,13 +6,10 @@ import {
   Patch,
   Param,
   Delete,
-  ValidationPipe,
-  ParseIntPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { EmailValidator } from 'src/validators/validateEmail';
 
 @Controller('users')
 export class UsersController {
@@ -44,7 +41,7 @@ export class UsersController {
   }
 
   @Delete()
-  removeByEmail(@Body('email') email: EmailValidator) {
-    return this.usersService.removeByEmail(email.email);
+  removeByEmail(@Body('email') email: string) {
+    return this.usersService.removeByEmail(email);
   }
 }
