@@ -6,7 +6,9 @@ import {
   Patch,
   Param,
   Delete,
+  UsePipes,
 } from '@nestjs/common';
+import { ValidateIDPipe } from 'src/validators/validateID.pipe';
 import { AudiosService } from './audios.service';
 import { CreateAudioDto } from './dto/create-audio.dto';
 import { UpdateAudioDto } from './dto/update-audio.dto';
@@ -16,6 +18,7 @@ export class AudiosController {
   constructor(private readonly audiosService: AudiosService) {}
 
   @Post()
+  @UsePipes(ValidateIDPipe)
   create(@Body() createAudioDto: CreateAudioDto) {
     return this.audiosService.create(createAudioDto);
   }

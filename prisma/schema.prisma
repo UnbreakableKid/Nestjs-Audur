@@ -17,6 +17,8 @@ model User {
   name     String?
   posts    Audio[]
   password String
+  role     Roles[]
+
 }
 
 model Audio {
@@ -27,4 +29,9 @@ model Audio {
   author    User?    @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  Int?
 
+}
+
+enum Roles {
+  ADMIN
+  USER
 }
